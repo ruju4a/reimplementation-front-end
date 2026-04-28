@@ -17,8 +17,8 @@ COPY . .
 ARG VITE_API_BASE_URL=http://localhost:3002
 ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
 
-# Use npx so vite resolves from node_modules/.bin (avoids "vite: not found" on Alpine)
-RUN npx vite build
+# Local vite only — npx can try to download from registry (fails on offline/VCL).
+RUN ./node_modules/.bin/vite build
 
 # Stage 2: Serve the application with nginx
 FROM nginx:alpine
