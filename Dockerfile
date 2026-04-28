@@ -8,7 +8,7 @@ WORKDIR /app
 
 COPY package*.json ./
 
-# Vite lives in devDependencies — default NODE_ENV in build may omit them.
+# Vite lives in devDependencies — ensure dev deps install (not production-only).
 ENV NODE_ENV=development
 RUN npm ci
 
@@ -17,7 +17,8 @@ COPY . .
 ARG VITE_API_BASE_URL=http://localhost:3002
 ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
 
-RUN npm run build
+# Use npx so vite resolves from node_modules/.bin (avoids "vite: not found" on Alpine)
+RUN npx vite build
 
 # Stage 2: Serve the application with nginx
 FROM nginx:alpine
