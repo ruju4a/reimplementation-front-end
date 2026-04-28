@@ -3,6 +3,7 @@ import { Button } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { SignedUpTeam } from '../../utils/interfaces';
+import { API_BASE_URL } from '../../config/api';
 import styles from './PartnerAdvertisements.module.css';
 
 const PartnerAdvertisements: React.FC = () => {
@@ -21,7 +22,7 @@ const PartnerAdvertisements: React.FC = () => {
 
       const token = localStorage.getItem('token') || localStorage.getItem('jwt');
       const response = await axios.get(
-        `http://localhost:3002/signed_up_teams`,
+        `${API_BASE_URL}/signed_up_teams`,
         {
           params: { topic_id: topicId },
           headers: { Authorization: `Bearer ${token}` }
@@ -54,7 +55,7 @@ const PartnerAdvertisements: React.FC = () => {
       const token = localStorage.getItem('token') || localStorage.getItem('jwt');
 
       await axios.post(
-        'http://152.7.176.23:3002/api/v1/join_team_requests',
+        `${API_BASE_URL}/join_team_requests`,
         {
           team_id: teamId,
           assignment_id: advertisements[0]?.sign_up_topic?.assignment_id,

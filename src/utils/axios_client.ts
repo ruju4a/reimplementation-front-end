@@ -1,4 +1,5 @@
 import axios from "axios";
+import { API_BASE_URL } from "../config/api";
 import { getAuthToken } from "./auth";
 
 /**
@@ -6,7 +7,7 @@ import { getAuthToken } from "./auth";
  */
 
 const axiosClient = axios.create({
-  baseURL: "http://localhost:3002",
+  baseURL: API_BASE_URL,
   timeout: 10000, // Increased from 1000ms to 10 seconds
   headers: {
     "Content-Type": "application/json",

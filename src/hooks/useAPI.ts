@@ -1,12 +1,13 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { useCallback, useEffect, useState } from "react";
+import { API_BASE_URL } from "../config/api";
 import { getAuthToken } from "../utils/auth";
 
 /**
  * @author Ankur Mundra on April, 2023
  */
 
-axios.defaults.baseURL = "http://localhost:3002";
+axios.defaults.baseURL = API_BASE_URL;
 axios.defaults.headers.common["Accept"] = "application/json";
 axios.defaults.headers.post["Content-Type"] = "application/json";
 axios.defaults.headers.put["Content-Type"] = "application/json";

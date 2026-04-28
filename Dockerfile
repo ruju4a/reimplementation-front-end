@@ -1,21 +1,20 @@
 # Multi-stage build for Vite React application
+# Build with: docker build --build-arg VITE_API_BASE_URL=http://YOUR_IP:3002 .
 
 # Stage 1: Build the application
 FROM node:20-alpine AS builder
 
-# Set working directory
 WORKDIR /app
 
-# Copy package files
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install
+RUN npm ci
 
-# Copy source code
 COPY . .
 
-# Build the application
+ARG VITE_API_BASE_URL=http://localhost:3002
+ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
+
 RUN npm run build
 
 # Stage 2: Serve the application with nginx
