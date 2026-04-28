@@ -8,6 +8,8 @@ WORKDIR /app
 
 COPY package*.json ./
 
+# Vite lives in devDependencies — default NODE_ENV in build may omit them.
+ENV NODE_ENV=development
 RUN npm ci
 
 COPY . .
