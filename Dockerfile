@@ -8,8 +8,9 @@ WORKDIR /app
 
 COPY package*.json ./
 
-# Vite lives in devDependencies — ensure dev deps install (not production-only).
-ENV NODE_ENV=development
+# vite, @vitejs/plugin-react, typescript live in dependencies so `npm ci` with
+# NODE_ENV=production still installs them (devDependencies omitted — smaller,faster).
+ENV NODE_ENV=production
 RUN npm ci
 
 COPY . .
@@ -17,8 +18,7 @@ COPY . .
 ARG VITE_API_BASE_URL=http://localhost:3002
 ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
 
-# Local vite only — npx can try to download from registry (fails on offline/VCL).
-RUN ./node_modules/.bin/vite build
+RUN npm run build
 
 # Stage 2: Serve the application with nginx
 FROM nginx:alpine
